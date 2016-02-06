@@ -1,6 +1,5 @@
 ---
 title: Docker ps formatting
-layout: post
 ---
 
 At [work](https://unionmetrics.com) we've been using Docker for a minute now to

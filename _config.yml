@@ -8,6 +8,11 @@ url: "http://mando.github.io" # the base hostname & protocol for your site
 twitter_username: mandoescamilla
 github_username:  mando
 
+defaults:
+  -
+    values:
+      layout: post
+
 permalink: "/:year/:month/:day/:title.html"
 format:
   date_long: "%B %-d, %Y"
