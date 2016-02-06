@@ -1,0 +1,466 @@
+@charset "UTF-8";
+
+// Copyright (c) 2014-2016 Sebastian Wiesner <swiesner@lunaryorn.com>
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+@import 'normalize';
+@import 'fonts';
+@import 'solarized';
+
+@import 'paragraph-space';
+
+$main-font: 'Vollkorn', emoji, serif;
+$main-color: #444;
+$font-size: 18px;
+
+$sans-font: 'Lato', emoji, sans-serif;
+$sans-font-size: .93em;
+
+$mono-font: 'Source Code Pro', monospace;
+$mono-font-size: .80em;
+
+$heading-color: #222;
+$secondary-color: #777;
+$border-color: #ccc;
+$quote-border-color: #eee;
+$accent-color: #e65825;
+
+$inline-box-shadow-color: rgba(0, 0, 0, .2);
+$inline-box-shadow-background: #fff;
+$inline-box-shadow: 0 1px 0 $inline-box-shadow-color, 0 0 0 2px $inline-box-shadow-background inset;
+
+@mixin font-feature-settings($features...) {
+  // scss-lint:disable VendorPrefix
+  font-feature-settings: $features;
+  -webkit-font-feature-settings: $features;
+}
+
+@mixin hyphens($setting) {
+  hyphens: $setting;
+  // scss-lint:disable VendorPrefix
+  -webkit-hyphens: $setting;
+  -moz-hyphens: $setting;
+  -ms-hyphens: $setting;
+  -o-hyphens: $setting;
+}
+
+// Basic typography styles
+body {
+  // Enable a couple of nice font features
+  @include font-feature-settings('onum', 'kern', 'liga', 'clig', 'dlig', 'calt');
+  @include hyphens(auto);
+
+  color: $main-color;
+  font-family: $main-font;
+  font-size: $font-size;
+  line-height: 1.35;
+  word-wrap: break-word;
+}
+
+// Page container
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+article {
+  margin-bottom: 15px;
+
+  p {
+    text-align: justify;
+  }
+}
+
+strong {
+  font-weight: 600;
+}
+
+ul,
+ol {
+  padding: 0;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+small,
+sup {
+  font-size: .86em;
+}
+
+sup {
+  // scss-lint:disable QualifyingElement
+  a[rel="footnote"] {
+    // scss-lint:enable QualifyingElement
+
+    // Use body font for footnotes
+    font-family: $main-font;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+}
+
+blockquote {
+  border-left: 5px solid $quote-border-color;
+  font-size: 1.1em;
+  font-style: italic;
+  line-height: 1.25;
+  margin: 1.2em 0;
+  padding: 0 2em;
+
+  em {
+    font-style: normal;
+  }
+}
+
+a {
+  color: $accent-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  // scss-lint:disable QualifyingElement
+  &[rev="footnote"] {
+    // scss-lint:enable QualifyingElement
+
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @include font-feature-settings('salt', 'lnum');
+  @include hyphens(none);
+
+  color: $heading-color;
+  font-family: $main-font;
+  font-weight: 600;
+  hyphens: none;
+  line-height: 1;
+  margin-bottom: .8em;
+  margin-top: 1em;
+
+  small {
+    color: $secondary-color;
+    font-size: .65em;
+    font-weight: normal;
+    line-height: 1;
+  }
+}
+
+h1 {
+  font-size: 1.1em;
+}
+
+h2 {
+  font-size: 1.05em;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+.header-section-number {
+  margin-right: .5em;
+
+  &::after {
+    content: '.';
+  }
+}
+
+hr {
+  border-color: $border-color;
+  border-style: none none solid;
+  border-width: 1px;
+  margin: 1.35em 0;
+}
+
+// Images and figures
+img {
+  max-width: 100%;
+}
+
+figure {
+  margin: 2em;
+
+  img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+}
+
+figcaption {
+  font-size: .9em;
+  margin-top: .8em;
+  text-align: center;
+
+  &::before {
+    content: 'Figure.';
+    font-weight: 700;
+    margin-right: .5em;
+  }
+}
+
+kbd,
+code {
+  font-family: $mono-font;
+  font-size: $mono-font-size;
+}
+
+kbd {
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  box-shadow: $inline-box-shadow;
+  padding: 0 4px;
+}
+
+code {
+  padding: .11em .22em;
+}
+
+pre {
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  padding: 10px;
+
+  code {
+    padding: 0;
+  }
+}
+
+// Special components
+.page-header {
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 1.5rem;
+  padding: .5rem;
+}
+
+.goat {
+  float: right;
+  margin-top: 2em;
+  img {
+    height: 40px;
+  }
+}
+
+.title {
+  font-family: $sans-font;
+  font-size: 2.0em;
+  font-weight: 700;
+  margin-bottom: .2em;
+  display: inline-block;
+}
+
+.post-info {
+  font-size: .83em;
+  margin-bottom: 2rem;
+
+  p {
+    margin-bottom: .25em;
+  }
+}
+
+// Navigation
+.navbar {
+  border-bottom: 1px solid $border-color;
+  padding-bottom: .4em;
+  padding-top: .8em;
+}
+
+.navbar-header {
+  display: block;
+  text-align: center;
+}
+
+.navbar-brand {
+  display: inline-block;
+
+  img {
+    height: 64px;
+    width: 64px;
+  }
+}
+
+.navbar-nav {
+  display: block;
+  list-style: outside none;
+  margin: 0;
+  text-align: center;
+
+  > li {
+    display: inline;
+
+    &::after {
+      content: ' · ';
+    }
+
+    &:last-child::after {
+      content: '';
+    }
+  }
+}
+
+.footnotes {
+  font-size: .86em;
+
+  ol {
+    margin-left: 2em;
+  }
+
+  li {
+    margin-bottom: .5em;
+  }
+}
+
+.page-footer {
+  // Page footer
+  border-top: 1px solid $border-color;
+  font-size: .86em;
+  margin-top: 1.5rem;
+  padding: .5rem;
+
+  p {
+    margin-bottom: .5em;
+    text-align: center;
+  }
+}
+
+.series-footer {
+  border-top: 1px solid $border-color;
+  margin-top: 1em;
+  padding: .5em;
+}
+
+.post-list {
+  list-style: outside none none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.post-list-item {
+  margin-bottom: 1em;
+}
+
+.post-list-date,
+.post-list-short-date {
+  display: block;
+  float: left;
+  font-size: .96em;
+  text-align: right;
+  width: 25%;
+}
+
+.post-list-date {
+  display: none;
+}
+
+.post-list-title {
+  display: block;
+  margin-bottom: .2em;
+  margin-left: 28%;
+}
+
+.post-list-tags {
+  display: block;
+  font-size: .83em;
+  font-style: italic;
+  margin-left: 28%;
+}
+
+.post-list-teaser {
+  display: none;
+  font-size: .83em;
+  margin-left: 28%;
+  margin-top: .5em;
+}
+
+// Special media
+@media print {
+  .container {
+    width: auto;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .page-footer {
+    display: none;
+  }
+
+  .title {
+    margin-top: 0;
+  }
+
+  .post-list-date {
+    display: block;
+  }
+
+  .post-list-short-date {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  // Larger devices
+  .container {
+    width: 900px;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+
+  .navbar-header {
+    display: inline;
+    margin-left: .5em;
+    margin-right: .5em;
+  }
+
+  .navbar-nav {
+    display: inline;
+  }
+
+  .post-list-date {
+    display: block;
+  }
+
+  .post-list-short-date {
+    display: none;
+  }
+
+  .post-list-teaser {
+    display: block;
+  }
+}
